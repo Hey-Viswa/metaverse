@@ -45,6 +45,24 @@ wss.on("connection", function connection(ws, req) {
           }
         });
       }
+
+      if (parsed.type === "chat") {
+        wss.clients.forEach(function each(client) {
+          if (client !== ws && client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify({
+              type: "chat_received",
+              payload: { clientId: clientId, message: parsed.payload.message }
+            }));
+          }
+        });
+      }
+
+      if (parsed.type === "ping") {
+        ws.send(JSON.stringify({
+          type: "pong",
+          payload: { time: parsed.payload.time }
+        }));
+      }
     });
   } catch (e) {
     console.error("JWT Verification failed:", e);

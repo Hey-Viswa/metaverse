@@ -69,12 +69,13 @@ userRouter.post("/signin", async (req, res) => {
       parsedData.data.password,
       user.password,
     );
-    if (isValid) return res.status(403).json({ message: "Invalid Password" });
-    const token = jwt.sign({ userId: user.id, role: user.role }, JWT_SECRET);
+    if (!isValid) return res.status(403).json({ message: "Invalid Password" });
+    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET as string);
     res.json({
       token,
     });
   } catch (error) {
+    console.error("SIGNIN ERROR:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
