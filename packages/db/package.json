@@ -1,0 +1,13 @@
+{
+  "name": "@repo/db",
+  "version": "1.0.0",
+  "description": "Prisma Database Module",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@prisma/client": "^5.19.1",
+    "prisma": "^5.19.1"
+  }
+}
